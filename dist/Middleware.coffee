@@ -1,5 +1,5 @@
 class Middleware
-  @version = "0.0.1"
+  @version = "0.0.2"
   wrap:(args...)->
     self = this
     ->
@@ -14,7 +14,10 @@ class Middleware
         async.promise().done ->
           middlewareCall index + 1
         mname = args[index]
-        self[mname].call this, async, arguments
+        if typeof mname is 'function'
+          mname.call this, async, arguments
+        else
+          self[mname].call this, async, arguments
       middlewareCall(0)
 
 if (typeof define is 'function') and (typeof define.amd is 'object') and define.amd

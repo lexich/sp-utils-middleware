@@ -4,7 +4,7 @@ var Middleware,
 Middleware = (function() {
   function Middleware() {}
 
-  Middleware.version = "0.0.1";
+  Middleware.version = "0.0.2";
 
   Middleware.prototype.wrap = function() {
     var args, self;
@@ -26,7 +26,11 @@ Middleware = (function() {
             return middlewareCall(index + 1);
           });
           mname = args[index];
-          return self[mname].call(_this, async, arguments);
+          if (typeof mname === 'function') {
+            return mname.call(_this, async, arguments);
+          } else {
+            return self[mname].call(_this, async, arguments);
+          }
         };
       })(this);
       return middlewareCall(0);
