@@ -4,7 +4,7 @@ var Middleware,
 Middleware = (function() {
   function Middleware() {}
 
-  Middleware.version = "0.0.3";
+  Middleware.version = "0.0.4";
 
   Middleware.prototype.wrap = function() {
     var args, self;
@@ -26,7 +26,7 @@ Middleware = (function() {
             return middlewareCall(index + 1);
           }).fail(function() {
             var _ref;
-            return (_ref = self.rejectQuery) != null ? _ref.apply(this, innerArguments) : void 0;
+            return (_ref = self.rejectQuery) != null ? _ref.apply(_this, innerArguments) : void 0;
           });
           mname = args[index];
           if (typeof mname === 'function') {
