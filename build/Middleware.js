@@ -4,7 +4,7 @@ var Middleware,
 Middleware = (function() {
   function Middleware() {}
 
-  Middleware.version = "0.0.2";
+  Middleware.version = "0.0.3";
 
   Middleware.prototype.wrap = function() {
     var args, self;
@@ -24,6 +24,9 @@ Middleware = (function() {
           async = $.Deferred();
           async.promise().done(function() {
             return middlewareCall(index + 1);
+          }).fail(function() {
+            var _ref;
+            return (_ref = self.rejectQuery) != null ? _ref.apply(this, innerArguments) : void 0;
           });
           mname = args[index];
           if (typeof mname === 'function') {

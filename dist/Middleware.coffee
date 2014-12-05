@@ -1,5 +1,5 @@
 class Middleware
-  @version = "0.0.2"
+  @version = "0.0.3"
   wrap:(args...)->
     self = this
     ->
@@ -11,8 +11,9 @@ class Middleware
           return func.apply this, innerArguments
 
         async = $.Deferred()
-        async.promise().done ->
-          middlewareCall index + 1
+        async.promise()
+          .done -> middlewareCall index + 1
+          .fail -> self.rejectQuery?.apply this, innerArguments
         mname = args[index]
         if typeof mname is 'function'
           mname.call this, async, arguments
